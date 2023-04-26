@@ -24,6 +24,14 @@ const checkPremium = async (message) => {
     return data.premiumUsers.includes(contact.id.user);
 }
 
+const generateProgressBar = (percent) => {
+    let graph = ""
+    for (let i = 1; i < 10; i++) {
+        graph = graph + ((i >= Math.floor(percent / 10)) ? '░' : '█')
+    }
+    return graph;
+}
+
 const basicCommands = async (client, chat, message) => {
     const args = message.body.split(' ');
     const command = args[0].toLowerCase();
@@ -32,7 +40,7 @@ const basicCommands = async (client, chat, message) => {
         updateCount('help');
         message.react('👍');
         message.reply(
-            `🚧 *Opções disponíveis:*
+`🚧 *Opções disponíveis:*
 *_!s_* - Cria um sticker da mídia ou link
 *_!status_* - Mostra os status de uso e respostas no pv
 *_!groupinfo_* - Mostra as principais informações do Grupo
@@ -105,7 +113,9 @@ Participant count: ${chat.participants.length}`
             message.react('❌');
             message.reply('Você precisa marcar alguém');
         } else {
-            chat.sendMessage(`💟 ${Math.floor(Math.random() * 101)}% de amor entre ${data.user} e ${data.mention} ♡`, { mentions: data.mentions });
+            let percent = Math.floor(Math.random() * 101)
+            let graph = await generateProgressBar(percent);
+            chat.sendMessage(`💟 O amor entre ${data.user} e ${data.mention} é:\n♡ ${graph} ${percent}% ♡`, { mentions: data.mentions });
             message.react('💟');
         }
 
@@ -185,6 +195,15 @@ Participant count: ${chat.participants.length}`
                 message.react('🎯');
             }, 5000);
         }
+    } else if (command === '!autistometro' || command === '!autista') {
+        await message.react('⌛');
+        const contact = await message.getContact();
+
+        let percent = Math.floor(Math.random() * 101)
+        let graph = await generateProgressBar(percent);
+        
+        chat.sendMessage(`😛 O autistômetro de @${contact.number} está em:\n${graph} ${percent}%`, { mentions: [contact] });
+        message.react('😛');
     } else if (command === '!counter') {
         await message.react('⌛');
         let sentence = "⚠️ *Contador de uso:*\n \n";
@@ -200,4 +219,4 @@ module.exports = {
     basicCommands: basicCommands
 }
 
-//⚠️✅❌⌛
+//⚠️✅❌⌛ ░▒▓█▄▀ ░█
