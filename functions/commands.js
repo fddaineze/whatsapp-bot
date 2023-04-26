@@ -1,6 +1,4 @@
 const { generateSticker } = require('./stickers.js');
-const { MessageMedia } = require('whatsapp-web.js')
-const { props } = require('./admin.js');
 const { updateCount, data } = require('./db.js');
 
 const getInteraction = async (client, message) => {
@@ -53,15 +51,15 @@ const basicCommands = async (client, chat, message) => {
     } else if (command === '!s') {
         updateCount('s');
         chat.sendStateTyping();
-        const sender = message.from.includes(props.number) ? message.to : message.from;
+        const sender = message.from.includes(data.number) ? message.to : message.from;
         await generateSticker(client, message, sender);
         chat.clearState();
     } else if (command === '!status') {
         updateCount('status');
         await message.react('⌛');
         message.reply(
-            `Uso: ${(props.personal) ? '❌ Bloqueado' : '✅ Liberado para uso'}
-Privado: ${(props.groupOnly) ? '❌ Bloqueado' : '✅ Respondendo no privado'}`
+            `Uso: ${(data.personal) ? '❌ Bloqueado' : '✅ Liberado para uso'}
+Privado: ${(data.groupOnly) ? '❌ Bloqueado' : '✅ Respondendo no privado'}`
         )
         message.react('✅');
     } else if (command === '!groupinfo') {
