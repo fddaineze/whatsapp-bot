@@ -3,8 +3,6 @@ const axios = require('axios');
 const jsdom = require("jsdom");
 const { JSDOM } = jsdom;
 
-const cheerio = require('cheerio');
-
 const sendAudio = async (chat, link) => {
     media = await MessageMedia.fromUrl(link, { unsafeMime: true });
     chat.sendMessage(media, { sendAudioAsVoice: true });
