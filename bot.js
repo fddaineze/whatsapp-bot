@@ -1,10 +1,11 @@
 const { Client, LocalAuth } = require('whatsapp-web.js');
 const qrcode = require('qrcode-terminal');
 
-const { adminCommands, props } = require('./functions/admin.js');
+const { adminCommands } = require('./functions/admin.js');
 const { basicCommands } = require('./functions/commands.js');
 const { events } = require('./functions/events.js');
 const { soundBoard } = require('./functions/soundboard.js');
+const { data } = require('./functions/db.js');
 
 const client = new Client({
     authStrategy: new LocalAuth({ clientId: "default-client" })
@@ -32,9 +33,9 @@ client.on('message_create', async message => {
         if (message.fromMe) {
             adminCommands(client, chat, message);
         }
-        if ((props.personal && !message.fromMe) || (props.groupOnly && !chat.isGroup)) {
-            // com o "props.personal" ativado, o bot funciona apenas para o host
-            // com o "props.groupOnly" ativado, o bot não funciona no privado
+        if ((data.personal && !message.fromMe) || (data.groupOnly && !chat.isGroup)) {
+            // com o "data.personal" ativado, o bot funciona apenas para o host
+            // com o "data.groupOnly" ativado, o bot não funciona no privado
         } else {
             basicCommands(client, chat, message);
             soundBoard(client, chat, message);
