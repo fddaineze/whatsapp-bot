@@ -1,5 +1,4 @@
 const { MessageMedia } = require('whatsapp-web.js');
-const axios = require('axios');
 const jsdom = require("jsdom");
 const { JSDOM } = jsdom;
 
