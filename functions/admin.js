@@ -1,10 +1,4 @@
-const { forceFileUpdate, refreshData } = require('./db.js');
-
-let props = {
-    number: 'your_number_without_ddd',
-    personal: false,
-    groupOnly: true
-}
+const { forceFileUpdate, refreshData, changePersonal, changeGroupOnly, data } = require('./db.js');
 
 const adminCommands = async (client, chat, message) => {
     const command = message.body.split(' ')[0].toLowerCase();
@@ -23,18 +17,18 @@ const adminCommands = async (client, chat, message) => {
 
     } else if (command === '!restrict') {
         await message.react('✅');
-        props.personal = !props.personal;
+        changePersonal();
         message.reply(
-            (props.personal)
+            (data.personal)
                 ? '❌ Bot ativado apenas para uso particular'
                 : '✅ Bot aberto ao público'
         );
 
-    } else if (command === '!group') {
+    } else if (command === '!group' || command === '!private') {
         await message.react('✅');
-        props.groupOnly = !props.groupOnly;
+        changeGroupOnly();
         message.reply(
-            (props.groupOnly)
+            (data.groupOnly)
                 ? '❌ Bot ativado apenas para uso em grupos'
                 : '✅ Bot aberto para uso no privado'
         );
@@ -73,5 +67,4 @@ Has Media? ${quotedMsg.hasMedia}`
 
 module.exports = {
     adminCommands: adminCommands,
-    props: props
 }
