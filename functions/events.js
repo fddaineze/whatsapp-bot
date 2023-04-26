@@ -31,13 +31,13 @@ const events = async (client) => {
     client.on('group_join', (notification) => {
         // User has joined or been added to the group.
         console.log('join', notification);
-        notification.reply('User joined.');
+        // notification.reply('User joined.');
     });
     
     client.on('group_leave', (notification) => {
         // User has left or been kicked from the group.
         console.log('leave', notification);
-        notification.reply('User left.');
+        // notification.reply('User left.');
     });
     
     // client.on('group_update', (notification) => {
