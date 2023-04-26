@@ -1,1 +1,20 @@
-{"cmdCounter":{"help":0,"s":0,"status":0,"groupinfo":0,"everyone":0,"amor":0,"beijo":0,"date":0,"passada":0,"duelo":0},"premiumUsers":["5511999999999"]}
+{
+    "number": "87654321",
+    "personal": false,
+    "groupOnly": false,
+    "cmdCounter": {
+        "help": 0,
+        "s": 0,
+        "status": 0,
+        "groupinfo": 0,
+        "everyone": 0,
+        "amor": 0,
+        "beijo": 0,
+        "date": 0,
+        "passada": 0,
+        "duelo": 0
+    },
+    "premiumUsers": [
+        "5511999999999",
+    ]
+}
