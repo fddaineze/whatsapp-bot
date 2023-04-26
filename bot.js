@@ -39,6 +39,7 @@ client.on('message_create', async message => {
         } else {
             basicCommands(client, chat, message);
             soundBoard(client, chat, message);
+            gpt(client, chat, message);
         }
     }
 });
