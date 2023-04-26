@@ -1,7 +1,7 @@
 const { forceFileUpdate, refreshData } = require('./db.js');
 
 let props = {
-    number: '73758311',
+    number: 'your_number_without_ddd',
     personal: false,
     groupOnly: true
 }
