@@ -6,6 +6,14 @@ const updateCount = (cmd) => {
     data.cmdCounter[cmd]++;
     fs.writeFileSync(db, JSON.stringify(data));
 }
+const changePersonal = () => {
+    data.personal = !data.personal;
+    fs.writeFileSync(db, JSON.stringify(data));
+}
+const changeGroupOnly =  () => {
+    data.groupOnly = !data.groupOnly;
+    fs.writeFileSync(db, JSON.stringify(data));
+}
 
 const forceFileUpdate = () => {
     fs.writeFileSync(db, JSON.stringify(data));
@@ -16,6 +24,8 @@ const refreshData = () => {
 }
 
 module.exports = {
+    changePersonal: changePersonal,
+    changeGroupOnly: changeGroupOnly,
     updateCount: updateCount,
     forceFileUpdate: forceFileUpdate,
     refreshData: refreshData,
