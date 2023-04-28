@@ -16,5 +16,8 @@
     },
     "premiumUsers": [
         "5511999999999",
-    ]
+    ],
+    "whitelistMode": false,
+    "whitelist": [],
+    "blacklist": []
 }
