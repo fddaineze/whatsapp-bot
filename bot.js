@@ -33,7 +33,12 @@ client.on('message_create', async message => {
         if (message.fromMe) {
             adminCommands(client, chat, message);
         }
-        if ((data.personal && !message.fromMe) || (data.groupOnly && !chat.isGroup)) {
+        if (
+            (data.personal && !message.fromMe) || 
+            (data.groupOnly && !chat.isGroup) ||
+            (data.whitelistMode && !data.whitelist.includes(chat.id.user)) ||
+            (data.blacklist.includes(chat.id.user))
+        ) {
             // com o "data.personal" ativado, o bot funciona apenas para o host
             // com o "data.groupOnly" ativado, o bot não funciona no privado
         } else {
