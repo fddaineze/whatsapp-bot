@@ -1,4 +1,4 @@
-const { forceFileUpdate, refreshData, changePersonal, changeGroupOnly, data } = require('./db.js');
+const { forceFileUpdate, refreshData, changePersonal, changeGroupOnly, changeWhitelist, addblacklist, removeblacklist, addwhitelist, removewhitelist,data } = require('./db.js');
 
 const adminCommands = async (client, chat, message) => {
     const command = message.body.split(' ')[0].toLowerCase();
@@ -12,7 +12,13 @@ const adminCommands = async (client, chat, message) => {
 *_!mediainfo_* - Envia no chat detalhes da mídia enviada
 *_!quoteinfo_* - Envia no chat detalhes da mensagem marcada
 *_!refresh_* - Recarrega os dados do arquivo JSON
-*_!save_* - Força o salvamento do arquivo JSON`
+*_!save_* - Força o salvamento do arquivo JSON
+*_!whitelist_* - Ativa ou desativa o modo de whitelist (global)
+*_!addblacklist_* - Adiciona o grupo a blacklist
+*_!removeblacklist_* - Remove o grupo da blacklist
+*_!addwhitelist_* - Adiciona o grupo a whitelist
+*_!removewhitelist_* - Remove o grupo da whitelist
+`
         );
 
     } else if (command === '!restrict') {
@@ -62,6 +68,25 @@ Has Media? ${quotedMsg.hasMedia}`
     } else if (command === '!save') {
         await message.react('✅');
         forceFileUpdate()
+    } else if (command === '!whitelist') {
+        changeWhitelist();
+        message.reply(
+            (data.whitelistMode)
+                ? '✅ Whitelist Ativada'
+                : '❌ Whitelist Desativada'
+        );
+    } else if (command === '!addblacklist') {
+        await message.react('✅');
+        addblacklist(chat.id.user);
+    } else if (command === '!removeblacklist') {
+        await message.react('✅');
+        removeblacklist(chat.id.user);
+    } else if (command === '!addwhitelist') {
+        await message.react('✅');
+        addwhitelist(chat.id.user);
+    } else if (command === '!removewhitelist') {
+        await message.react('✅');
+        removewhitelist(chat.id.user);
     }
 }
 
