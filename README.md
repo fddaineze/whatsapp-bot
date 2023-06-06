@@ -73,7 +73,7 @@ Com o ffmpeg devidamente instalado e configurado no seu sistema, você pode usar
 2. Clique em sua foto > Profile
 3. Copie a chave em "API Key"
 
-    <img src="igm/elevenlabs.jpg" alt="Tela de loading">
+    <img src="/igm/elevenlabs.jpg" alt="Tela de loading">
 
 ---
 
