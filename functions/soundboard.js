@@ -1,6 +1,7 @@
 const { MessageMedia } = require('whatsapp-web.js');
 const jsdom = require("jsdom");
 const { JSDOM } = jsdom;
+const { updateCount, data } = require('./db.js');
 
 const sendAudio = async (chat, link) => {
     media = await MessageMedia.fromUrl(link, { unsafeMime: true });
@@ -39,6 +40,7 @@ const soundBoard = async (client, chat, message) => {
         message.react('');
     }
     if (command === "!mp3") {
+        updateCount('mp3');
         let search = args;
         search.shift();
         if(search == "") {
