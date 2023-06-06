@@ -1,5 +1,8 @@
 const { generateSticker } = require('./stickers.js');
+const { rollDice } = require('./dice.js');
 const { updateCount, data } = require('./db.js');
+const { generateAudio } = require('./audio.js');
+const { audioSpeech } = require('./speech.js');
 
 const getInteraction = async (client, message) => {
     const sender = await message.getContact();
@@ -27,7 +30,7 @@ const checkPremium = async (message) => {
 const generateProgressBar = (percent) => {
     let graph = ""
     for (let i = 1; i < 10; i++) {
-        graph = graph + ((i >= Math.floor(percent / 10)) ? '░' : '█')
+        graph = graph + ((i > Math.floor(percent / 10)) ? '░' : '█')
     }
     return graph;
 }
@@ -51,9 +54,12 @@ const basicCommands = async (client, chat, message) => {
 *_!passada_* - Passe a mão em... 🌚
 *_!duelo_* - Desafie alguém para um duelo!
 *_!mp3_* - Busca um mp3 no site myinstants.com"
+*_!d_* - rola dados de RPG, exemplo: 1d20+3d6+5\n_(funciona pra dados e modificadores)_
+*_!tc_* - Transcreve Audio para Texto"
 
 ✨ *Comandos Premium:*
-*_!everyone_* - Menciona todos os membros do grupo!`
+*_!everyone_* - Menciona todos os membros do grupo!
+*_!tts_* - Text-to-speech, conversão de texto em fala`
         );
 
     } else if (command === '!s') {
@@ -61,6 +67,11 @@ const basicCommands = async (client, chat, message) => {
         chat.sendStateTyping();
         const sender = message.from.includes(data.number) ? message.to : message.from;
         await generateSticker(client, message, sender);
+        chat.clearState();
+    } else if (command === '!d' || command === '!dice') {
+        updateCount('dice');
+        chat.sendStateTyping();
+        await rollDice(client, message);
         chat.clearState();
     } else if (command === '!status') {
         updateCount('status');
@@ -212,6 +223,18 @@ Participant count: ${chat.participants.length}`
         }
         message.reply(sentence);
         message.react('🔢');
+    } else if (command === '!tts') {
+        const premium = await checkPremium(message);
+        if (premium) {
+            updateCount('tts');
+            generateAudio(chat, message);
+        } else {
+            message.reply('❌ Este comando está disponível somente para usuários premium');
+            message.react('❌');
+        }
+    } else if (command === '!tc' || command === '!ts') {
+        updateCount('tc');
+        audioSpeech(chat, message);
     }
 }
 
