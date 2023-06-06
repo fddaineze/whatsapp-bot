@@ -25,7 +25,6 @@ const generateSticker = async (client, msg, sender) => {
             }
         } catch (e) {
             msg.reply("❌ Erro ao processar imagem");
-            //console.log('error:', e);
         }
     } else {
         try {
@@ -40,7 +39,6 @@ const generateSticker = async (client, msg, sender) => {
             }
         } catch (e) {
             msg.reply("❌ Não foi possível gerar um sticker com esse link");
-            //console.log('error:', e);
         }
     }
 }
